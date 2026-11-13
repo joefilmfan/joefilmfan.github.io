@@ -1,82 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Search | Joseph Kahn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="description" content="Search commercials, music videos, films, short films, and television by Joseph Kahn.">
   <link rel="canonical" href="https://joefilmfan.github.io/search/">
+  <link rel="stylesheet" href="https://use.typekit.net/pbs1par.css">
+  <link rel="stylesheet" type="text/css" href="https://www.josephkahn.com/css/styles.css?v=110909" media="all">
+  <link rel="stylesheet" type="text/css" href="https://www.josephkahn.com/css/mobile.css?v=110928" media="all">
   <style>
-    :root {
-      --red: #f02610;
-      --black: #000;
-      --white: #fff;
-      --muted: #666;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; border: 0; }
-    html, body { width: 100%; min-height: 100%; }
-    body {
-      font-family: "futura-pt", Futura, "Trebuchet MS", "Century Gothic", "Gill Sans", "Gill Sans MT", sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--black);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap {
+
+    /* Search page only — site look is loaded from josephkahn.com CSS + Typekit */
+    #sidebar.bheight { height: 100vh; }
+    /* Header is only the absolutely positioned logo, so clear it the way
+       the first work-page row sits below the wordmark (~130px). */
+    #content { margin-top: 0; }
+    .search-panel {
       width: calc(100% - 100px);
-      max-width: 1600px;
-      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 140px 50px 40px;
     }
-    header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px 40px;
-      flex-wrap: wrap;
-      padding: 40px 0 28px;
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: 0.22em;
-      line-height: 1;
-      text-transform: uppercase;
-      color: var(--black);
-      white-space: nowrap;
-    }
-    .logo:hover { color: var(--red); }
-    nav ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px 22px;
-    }
-    nav a {
-      position: relative;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--black);
-      padding-top: 6px;
-    }
-    nav a:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 95%;
-      height: 0;
-      border-top: 2px solid var(--red);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    nav a:hover:before,
-    nav a[aria-current="page"]:before { opacity: 1; }
-    .search-panel { padding: 8px 0 22px; }
     .search-label {
       position: absolute;
       width: 1px;
@@ -84,241 +30,169 @@
       overflow: hidden;
       clip: rect(0 0 0 0);
     }
-    .search-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
     #q {
-      background: transparent;
-      border: 2px solid var(--red);
-      color: var(--red);
-      font-family: inherit;
-      font-size: 16px;
+      display: block;
+      font-family: "futura-pt", sans-serif;
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      padding: 14px 16px;
+      color: #000;
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid #000;
+      border-radius: 0;
       width: 100%;
       max-width: 640px;
+      padding: 6px 0 12px;
+      margin: 0;
       outline: none;
-      border-radius: 0;
       -webkit-appearance: none;
+      appearance: none;
     }
-    #q::placeholder { color: #f0261080; text-transform: uppercase; }
-    #count {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 18px;
-      padding: 20px 0 24px;
-      align-items: center;
-    }
-    .chips .label {
-      font-size: 12px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-right: 4px;
-    }
-    .chip {
-      background: none;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--black);
-      cursor: pointer;
-      position: relative;
-      padding-top: 6px;
-      line-height: 1.2;
-    }
-    .chip:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 95%;
-      border-top: 2px solid var(--red);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .chip:hover:before,
-    .chip[aria-pressed="true"]:before { opacity: 1; }
-    #results {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      padding-bottom: 80px;
-    }
-    .card {
-      position: relative;
-      display: block;
-      overflow: hidden;
-      background: #111;
-      color: var(--white);
-    }
-    .card img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      vertical-align: middle;
-    }
-    .card .caption {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 18px;
-      color: var(--white);
-      background: rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-    }
-    .card .infowrap {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: all 0.3s 0.05s;
-      position: relative;
-      z-index: 3;
-    }
-    .card .slice {
-      position: absolute;
-      left: -20%;
-      bottom: -50%;
-      width: 200%;
-      height: 50%;
-      background: rgba(240, 38, 16, 0.5);
-      transform-origin: bottom left;
-      transform: rotate(0deg);
-      transition: all 0.3s;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .card:hover .caption,
-    .card:focus-visible .caption { opacity: 1; }
-    .card:hover .infowrap,
-    .card:focus-visible .infowrap {
+    #q::placeholder {
+      color: #000;
       opacity: 1;
-      transform: translateY(0);
-    }
-    .card:hover .slice,
-    .card:focus-visible .slice {
-      bottom: 0;
-      transform: rotate(13deg);
-    }
-    .card h2 {
-      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
       font-weight: 700;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      line-height: 1.25;
     }
-    .card h3 {
-      font-size: 16px;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.06em;
-      line-height: 1.3;
-      text-transform: none;
+    #q:focus {
+      border-bottom-color: #f02610;
+      color: #f02610;
     }
-    .card .cat {
-      display: block;
-      margin-top: 10px;
-      font-size: 10px;
-      font-style: normal;
+    #q:focus::placeholder { color: #f02610; opacity: 0.45; }
+    #q::-webkit-search-decoration,
+    #q::-webkit-search-cancel-button,
+    #q::-webkit-search-results-button,
+    #q::-webkit-search-results-decoration { display: none; -webkit-appearance: none; }
+    #thumbs .empty {
+      padding: 20px 50px 80px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      opacity: 0.85;
+      color: #000;
     }
-    .empty {
-      grid-column: 1 / -1;
-      padding: 60px 0;
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
+    #thumbs .empty.error { color: #f02610; }
+    @media all and (max-width: 767px) {
+      .search-panel {
+        width: 100%;
+        padding: 130px 20px 24px;
+      }
+      #q { font-size: 16px; letter-spacing: 0.16em; max-width: none; }
+      #thumbs .empty { padding: 10px 20px 60px; }
     }
-    .error { color: var(--red); }
-    @media (max-width: 900px) {
-      #results { grid-template-columns: repeat(2, 1fr); }
-      .card h2 { font-size: 16px; letter-spacing: 0.2em; }
-      .card h3 { font-size: 14px; }
-    }
-    @media (max-width: 720px) {
-      .wrap { width: calc(100% - 36px); }
-      header { padding: 24px 0 18px; }
-      .logo { font-size: 16px; letter-spacing: 0.16em; }
-      nav ul { justify-content: flex-start; gap: 8px 16px; }
-      #results { grid-template-columns: 1fr; }
-    }
+
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <a class="logo" href="https://www.josephkahn.com">Joseph Kahn</a>
-      <nav aria-label="Site">
-        <ul>
-          <li><a href="https://www.josephkahn.com/featured">Work</a></li>
-          <li><a href="https://www.josephkahn.com/press">Press</a></li>
-          <li><a href="https://www.josephkahn.com/bio">Bio</a></li>
-          <li><a href="https://www.josephkahn.com/contact">Contact</a></li>
-          <li><a href="https://www.ebay.com/usr/supermegapictures" target="_blank" rel="noopener">Shop</a></li>
-          <li><a href="./" aria-current="page">Search</a></li>
-        </ul>
-      </nav>
-    </header>
+<body class="pagestatic">
 
-    <section class="search-panel">
-      <div class="search-row">
-        <label class="search-label" for="q">Search projects</label>
-        <input id="q" type="search" placeholder="Search" autocomplete="off" spellcheck="false" autofocus>
-        <div id="count"></div>
-      </div>
-      <div class="chips" id="chips" role="group" aria-label="Filter by category">
-        <span class="label">Filter</span>
-      </div>
-    </section>
+<header>
+  <a href="https://www.josephkahn.com/" class="logo ib v-middle">
+	
+		<div class="logostatic">
+		
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 761.5 335.9" style="enable-background:new 0 0 761.5 335.9;" xml:space="preserve"><path class="bottom" fill="#f02610" stroke="none" d="M226.7,257.5l64.6,78.4h-50.2l-50-64.6h-0.4v64.6H152v-149h38.7v61.5h0.4l46.8-61.5h48L226.7,257.5z M651.5,335.9v-91.3h0.4l70.9,91.3h38.7v-72.3L722.8,253v25h-0.4l-24.9-32l-84.7-23.2v113.1H651.5z M324.2,157.9 c11.3,0,21.2-2,29.8-6.1l-76.8-21.1l-5.4,10.1C288,152.2,305.5,157.9,324.2,157.9z M456.8,335.9h38.7v-61.1h55.9v61.1h38.7V216.6 L551.4,206v38.5h-55.9v-53.8l-13.4-3.7h-25.3V335.9z M392.5,186.9l56.1,149h-41.3l-9.7-25.9h-53.4L334,335.9h-41.1l57.3-149 L392.5,186.9z M387.1,280.4L371.3,233h-0.4l-16,47.4H387.1z M49,107.7c0,0.9-0.1,2.4-0.3,4.6c-0.1,1.7-0.4,3.4-1,4.9 c-0.5,1.1-1.1,2.3-1.8,3.8c-0.6,1.4-1.8,2.5-3.2,3.1c-1.5,0.6-3.2,0.9-4.8,0.9c-4.2,0-9.4-4.2-15.6-12.6L0,135.9 c9.5,14.6,22.2,21.9,38.3,21.9c16.1,0,28.3-4.7,36.8-14c8.4-9.3,12.6-22.1,12.6-38.3V78.7L49,68.1v35V107.7z M184.3,158.8 c24,0,43.7-7.7,59.2-23c3.7-3.6,6.9-7.5,9.7-11.7L210,112.3c-15.9,12.7-39.2,12-54.3-2.4c-0.4-0.4-0.9-0.9-1.3-1.3 c-4-4.2-7-8.8-9.1-14l-43.3-11.9c1.2,21.4,8.9,39.1,23,53.1C140.6,151.2,160.3,158.8,184.3,158.8z"/><path class="top" fill="#000" stroke="none" d="M87.7,4.9v73.8L49,68.1V4.9H87.7z M616.6,53.9c0,33.7-17.6,50.6-52.8,50.6h-21.9v49.4h-38.7V4.9h59.2 c16.7,0,29.9,4.1,39.6,12.2S616.6,37.5,616.6,53.9z M576.2,55.1c0.1-3.1-0.4-6.3-1.6-9.2c-0.8-2.1-2.1-4-3.8-5.6 c-1.9-1.5-4.1-2.5-6.4-2.9c-2.4-0.5-4.9-0.9-7.3-1.1c-2-0.1-5-0.2-8.8-0.2h-6.5v37.1h6.5c3.7,0,6.5,0,8.4-0.1 c2.5-0.1,4.9-0.5,7.3-1.1c2.4-0.4,4.7-1.4,6.6-2.8c1.7-1.5,3-3.3,3.8-5.3C575.8,61.2,576.3,58.2,576.2,55.1z M255,36.9 c-7.5-11.6-18-21.1-30.4-27.4c-25.4-12.8-55.3-12.8-80.6,0c-12.4,6.3-22.9,15.7-30.4,27.4c-7.8,11.8-11.8,25.6-11.7,39.7 c0,2,0.1,4,0.2,6l43.3,11.9c-2.1-5.4-3.2-11.3-3.2-17.7c0-10.4,4.2-19.6,12.5-27.5c16.6-15.8,42.7-15.8,59.3,0 c8.3,7.9,12.5,17.1,12.5,27.5c0,12.7-4.1,23.2-12.2,31.7c-1.3,1.4-2.7,2.6-4.1,3.7l43.1,11.8c9-13.3,13.5-29.1,13.5-47.5 C266.8,62.6,262.8,48.7,255,36.9z M397,153.9h84.8v-32.8h-46V95.4h43.7V62.6h-43.7V37.7h46V4.9H397V153.9z M551.4,186.9v19 l38.7,10.6v-29.6H551.4z M612.7,186.9v35.8l84.7,23.2l-46-59.1H612.7z M761.5,4.9h-38.7v57.5h-55.9V4.9h-38.7v149h38.7v-61h55.9 v60.2V253l38.7,10.6V153.9V4.9z M482.1,186.9l13.4,3.7v-3.7H482.1z M381.9,103.8c0-11.2-3.2-19.9-9.7-26.2 c-6.5-6.3-15.5-11.1-27.1-14.5l-9.9-3c-3.3-1.1-5.9-2-7.8-2.8c-2.3-1.1-4.4-2.5-6.1-4.3c-2-1.8-3.2-4.4-3.3-7.1 c0-3.8,1.7-6.9,5.2-9.1c3.4-2.2,7.3-3.4,11.4-3.4c9.2,0,17.8,3.3,25.7,9.9l15.4-30c-7.1-3.9-14.7-6.9-22.6-8.9 c-7.8-2.1-15.9-3.3-24-3.4c-15,0-27.4,4.6-37,13.8c-9.6,9.2-14.4,21.2-14.4,36.2c0,7,0.9,12.8,2.6,17.6c1.7,4.7,4.7,8.8,8.7,11.8 c3.8,2.9,7.9,5.3,12.2,7.2c5.5,2.2,11.1,4,16.8,5.5c2.8,0.8,4.3,1.3,4.7,1.4c12.5,3.7,18.8,8.9,18.8,15.6c0,4.9-1.9,8.6-5.6,11.2 c-3.9,2.6-8.5,3.9-13.1,3.9c-11.2,0-22.7-5.1-34.4-15.4l-11.2,21.1l76.8,21.1c4.5-2.1,8.7-4.7,12.4-7.9 C376.7,135.2,381.9,121.8,381.9,103.8z"/></svg>
+		
+		</div>
+	
+		<div class="logowhite">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 761.51 335.91"><path d="M51.82,107.39V112q0,1.29-.3,4.64a16.87,16.87,0,0,1-1,4.94q-.69,1.58-1.78,3.75a6.21,6.21,0,0,1-3.16,3.06,12.21,12.21,0,0,1-4.84.89q-6.33,0-15.61-12.65L2.82,140.19Q17,162.12,41.15,162.12t36.75-14q12.64-14,12.64-38.33V9.2H51.82Z" transform="translate(-2.82 -4.26)"/><path d="M246.29,140.09q23.21-23,23.22-59.17a70.88,70.88,0,0,0-11.66-39.71,78.54,78.54,0,0,0-30.43-27.36,89.56,89.56,0,0,0-80.61,0,78.5,78.5,0,0,0-30.43,27.36,70.85,70.85,0,0,0-11.66,39.71q0,36.16,23.21,59.17t59.17,23Q223.08,163.11,246.29,140.09ZM145,81.12q0-15.6,12.45-27.46a43,43,0,0,1,59.27,0Q229.2,65.51,229.2,81.12q0,19-12.25,31.71a41.29,41.29,0,0,1-59.67,0Q145,100.08,145,81.12Z" transform="translate(-2.82 -4.26)"/><path d="M338.76,125.47a22.7,22.7,0,0,1-13.14,3.85q-16.8,0-34.38-15.41l-16.6,31.22q24.3,17,52.36,17,25.68,0,42.28-14,15.41-13,15.41-40.11,0-16.79-9.68-26.18T347.95,67.29l-9.88-3q-4.94-1.58-7.8-2.77a20.34,20.34,0,0,1-6.12-4.35,9.69,9.69,0,0,1-3.26-7.11q0-5.73,5.24-9.09a20.64,20.64,0,0,1,11.36-3.36q13.83,0,25.69,9.88l15.41-30a96.66,96.66,0,0,0-22.62-8.89,94.41,94.41,0,0,0-24-3.36Q309.42,5.25,295,19T280.57,55.23q0,10.47,2.57,17.58a25.2,25.2,0,0,0,8.69,11.76,56.47,56.47,0,0,0,12.25,7.21,146.86,146.86,0,0,0,16.79,5.53q4.15,1.19,4.74,1.38,18.77,5.53,18.77,15.61Q344.39,121.62,338.76,125.47Z" transform="translate(-2.82 -4.26)"/><polygon points="481.77 121.11 435.73 121.11 435.73 95.43 479.4 95.43 479.4 62.63 435.73 62.63 435.73 37.74 481.77 37.74 481.77 4.94 397.01 4.94 397.01 153.91 481.77 153.91 481.77 121.11"/><path d="M604.85,21.35Q590.33,9.2,565.24,9.2H506v149h38.73V108.78h21.93q52.75,0,52.75-50.58Q619.37,33.5,604.85,21.35ZM577.39,68.27a15.11,15.11,0,0,1-3.85,5.33,16,16,0,0,1-6.62,2.77,41.48,41.48,0,0,1-7.31,1.09q-2.87.1-8.4.1h-6.52V40.42h6.52q5.73,0,8.79.2a53.48,53.48,0,0,1,7.31,1.09,13.57,13.57,0,0,1,6.42,2.87,16.2,16.2,0,0,1,3.75,5.63,23.26,23.26,0,0,1,1.58,9.19A20.82,20.82,0,0,1,577.39,68.27Z" transform="translate(-2.82 -4.26)"/><polygon points="761.51 4.94 722.79 4.94 722.79 62.43 666.88 62.43 666.88 4.94 628.15 4.94 628.15 153.91 666.88 153.91 666.88 92.86 722.79 92.86 722.79 153.07 722.79 153.07 722.79 278.02 722.39 278.02 651.46 186.94 612.74 186.94 612.74 335.91 651.46 335.91 651.46 244.63 651.86 244.63 722.79 335.91 761.51 335.91 761.51 153.91 761.51 153.91 761.51 4.94"/><polygon points="285.99 186.94 237.98 186.94 191.15 248.39 190.75 248.39 190.75 186.94 152.03 186.94 152.03 335.91 190.75 335.91 190.75 271.31 191.15 271.31 241.14 335.91 291.32 335.91 226.71 257.47 285.99 186.94"/><path d="M353,191.2l-57.3,149h41.1l10.27-25.88h53.35l9.68,25.88h41.29l-56.11-149Zm4.74,93.45,16-47.42h.4l15.81,47.42Z" transform="translate(-2.82 -4.26)"/><polygon points="551.43 244.43 495.51 244.43 495.51 186.94 456.79 186.94 456.79 335.91 495.51 335.91 495.51 274.86 551.43 274.86 551.43 335.91 590.15 335.91 590.15 186.94 551.43 186.94 551.43 244.43"/></svg>
+		</div>
+		
+		<div class="logocolor">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 761.51 335.91"><path d="M51.82,107.39V112q0,1.29-.3,4.64a16.87,16.87,0,0,1-1,4.94q-.69,1.58-1.78,3.75a6.21,6.21,0,0,1-3.16,3.06,12.21,12.21,0,0,1-4.84.89q-6.33,0-15.61-12.65L2.82,140.19Q17,162.12,41.15,162.12t36.75-14q12.64-14,12.64-38.33V9.2H51.82Z" transform="translate(-2.82 -4.26)"/><path d="M246.29,140.09q23.21-23,23.22-59.17a70.88,70.88,0,0,0-11.66-39.71,78.54,78.54,0,0,0-30.43-27.36,89.56,89.56,0,0,0-80.61,0,78.5,78.5,0,0,0-30.43,27.36,70.85,70.85,0,0,0-11.66,39.71q0,36.16,23.21,59.17t59.17,23Q223.08,163.11,246.29,140.09ZM145,81.12q0-15.6,12.45-27.46a43,43,0,0,1,59.27,0Q229.2,65.51,229.2,81.12q0,19-12.25,31.71a41.29,41.29,0,0,1-59.67,0Q145,100.08,145,81.12Z" transform="translate(-2.82 -4.26)"/><path d="M338.76,125.47a22.7,22.7,0,0,1-13.14,3.85q-16.8,0-34.38-15.41l-16.6,31.22q24.3,17,52.36,17,25.68,0,42.28-14,15.41-13,15.41-40.11,0-16.79-9.68-26.18T347.95,67.29l-9.88-3q-4.94-1.58-7.8-2.77a20.34,20.34,0,0,1-6.12-4.35,9.69,9.69,0,0,1-3.26-7.11q0-5.73,5.24-9.09a20.64,20.64,0,0,1,11.36-3.36q13.83,0,25.69,9.88l15.41-30a96.66,96.66,0,0,0-22.62-8.89,94.41,94.41,0,0,0-24-3.36Q309.42,5.25,295,19T280.57,55.23q0,10.47,2.57,17.58a25.2,25.2,0,0,0,8.69,11.76,56.47,56.47,0,0,0,12.25,7.21,146.86,146.86,0,0,0,16.79,5.53q4.15,1.19,4.74,1.38,18.77,5.53,18.77,15.61Q344.39,121.62,338.76,125.47Z" transform="translate(-2.82 -4.26)"/><polygon points="481.77 121.11 435.73 121.11 435.73 95.43 479.4 95.43 479.4 62.63 435.73 62.63 435.73 37.74 481.77 37.74 481.77 4.94 397.01 4.94 397.01 153.91 481.77 153.91 481.77 121.11"/><path d="M604.85,21.35Q590.33,9.2,565.24,9.2H506v149h38.73V108.78h21.93q52.75,0,52.75-50.58Q619.37,33.5,604.85,21.35ZM577.39,68.27a15.11,15.11,0,0,1-3.85,5.33,16,16,0,0,1-6.62,2.77,41.48,41.48,0,0,1-7.31,1.09q-2.87.1-8.4.1h-6.52V40.42h6.52q5.73,0,8.79.2a53.48,53.48,0,0,1,7.31,1.09,13.57,13.57,0,0,1,6.42,2.87,16.2,16.2,0,0,1,3.75,5.63,23.26,23.26,0,0,1,1.58,9.19A20.82,20.82,0,0,1,577.39,68.27Z" transform="translate(-2.82 -4.26)"/><polygon points="761.51 4.94 722.79 4.94 722.79 62.43 666.88 62.43 666.88 4.94 628.15 4.94 628.15 153.91 666.88 153.91 666.88 92.86 722.79 92.86 722.79 153.07 722.79 153.07 722.79 278.02 722.39 278.02 651.46 186.94 612.74 186.94 612.74 335.91 651.46 335.91 651.46 244.63 651.86 244.63 722.79 335.91 761.51 335.91 761.51 153.91 761.51 153.91 761.51 4.94"/><polygon points="285.99 186.94 237.98 186.94 191.15 248.39 190.75 248.39 190.75 186.94 152.03 186.94 152.03 335.91 190.75 335.91 190.75 271.31 191.15 271.31 241.14 335.91 291.32 335.91 226.71 257.47 285.99 186.94"/><path d="M353,191.2l-57.3,149h41.1l10.27-25.88h53.35l9.68,25.88h41.29l-56.11-149Zm4.74,93.45,16-47.42h.4l15.81,47.42Z" transform="translate(-2.82 -4.26)"/><polygon points="551.43 244.43 495.51 244.43 495.51 186.94 456.79 186.94 456.79 335.91 495.51 335.91 495.51 274.86 551.43 274.86 551.43 335.91 590.15 335.91 590.15 186.94 551.43 186.94 551.43 244.43"/></svg>
+		</div>
+		
+	</a>
+  <figure class="slice"></figure>
+</header>
 
-    <main id="results" aria-live="polite"></main>
+<div id="sidebar" class="bheight">
+  <div class="menuBtn" role="button" tabindex="0" aria-label="Menu">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
   </div>
+</div>
 
-  <script>
+<section id="content">
+  <article class="inner workpage">
+    <div class="search-panel">
+      <label class="search-label" for="q">Search projects</label>
+      <input id="q" type="text" placeholder="SEARCH" autocomplete="off" spellcheck="false" autofocus>
+    </div>
+    <div id="thumbs" class="thumbs grid-1" aria-live="polite"></div>
+  </article>
+</section>
+
+<footer class="addb4">
+  <div class="inner ib v-middle"></div>
+</footer>
+
+<div id="overlay" class="addb4">
+  <div class="closer closeoverlay"></div>
+  <nav class="ib v-middle">
+    <ul>
+      <li><a href="https://joefilmfan.github.io/search/" class="pageOn">SEARCH</a></li>
+      <li><a href="https://www.josephkahn.com/featured" target="_parent">WORK</a></li>
+      <li><a href="https://www.josephkahn.com/press" target="_parent">PRESS</a></li>
+      <li><a href="https://www.josephkahn.com/bio" target="_parent">BIO</a></li>
+      <li><a href="https://www.josephkahn.com/contact" target="_parent">CONTACT</a></li>
+      <li><a href="https://www.ebay.com/usr/supermegapictures" target="_blank" rel="noopener">SHOP</a></li>
+    </ul>
+    <div class="social standard">
+      <ul>
+        <li class="ib v-middle"><a href="http://www.instagram.com" target="_blank" rel="noopener">instagram</a></li>
+        <li class="ib v-middle"><a href="http://www.vimeo.com" target="_blank" rel="noopener">vimeo</a></li>
+        <li class="ib v-middle"><a href="http://www.youtube.com" target="_blank" rel="noopener">youtube</a></li>
+        <li class="ib v-middle"><a href="https://vimeo.com/josephkahndirector" target="_blank" rel="noopener">facebook</a></li>
+      </ul>
+    </div>
+  </nav>
+  <figure class="slice"></figure>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://www.josephkahn.com/js/social-icons.js"></script>
+<script>
+
+(function () {
+  function ready(fn) {
+    if (document.readyState !== "loading") fn();
+    else document.addEventListener("DOMContentLoaded", fn);
+  }
+  ready(function () {
+    if (window.jQuery) {
+      if (typeof window.getSocial === "function") window.getSocial();
+    }
+    var body = document.body;
+    var btn = document.querySelector(".menuBtn");
+    var closer = document.querySelector("#overlay .closeoverlay");
+    function toggle() { body.classList.toggle("menu"); }
+    if (btn) {
+      btn.addEventListener("click", toggle);
+      btn.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+      });
+    }
+    if (closer) closer.addEventListener("click", toggle);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && body.classList.contains("menu")) {
+        body.classList.remove("menu");
+      }
+    });
+  });
+})();
+
+
 (function () {
   "use strict";
 
-  var CATEGORIES = [
-    { slug: "all", label: "All" },
-    { slug: "featured", label: "Featured" },
-    { slug: "commercials", label: "Commercials" },
-    { slug: "music-videos", label: "Music Videos" },
-    { slug: "films", label: "Films" },
-    { slug: "short-films", label: "Short Films" },
-    { slug: "tv", label: "TV" }
-  ];
-
-  var state = { projects: [], query: "", category: "all" };
-  var resultsEl = document.getElementById("results");
-  var countEl = document.getElementById("count");
+  var state = { projects: [], query: "" };
+  var resultsEl = document.getElementById("thumbs");
   var inputEl = document.getElementById("q");
-  var chipsEl = document.getElementById("chips");
 
   function norm(s) {
     return String(s || "")
@@ -381,7 +255,7 @@
       for (fi = 0; fi < words.length; fi++) {
         f = words[fi];
         if (f === t) ts = Math.max(ts, 1);
-        else if (f.startsWith(t) || t.startsWith(f) && f.length >= 3) ts = Math.max(ts, 0.85);
+        else if (f.startsWith(t) || (t.startsWith(f) && f.length >= 3)) ts = Math.max(ts, 0.85);
         else if (t.length >= 3 && f.indexOf(t) !== -1) ts = Math.max(ts, 0.6);
         else if (t.length >= 3 && levenshtein(f, t) === 1) ts = Math.max(ts, 0.7);
         else if (t.length >= 4 && subsequence(f, t)) ts = Math.max(ts, 0.4);
@@ -394,7 +268,7 @@
 
   function scoreProject(p, query) {
     var q = norm(query);
-    if (!q) return 1;
+    if (!q) return 0;
     var title = norm(p.title);
     var artist = norm(p.artist);
     var cats = norm((p.categories || []).join(" "));
@@ -418,47 +292,16 @@
   function readParams() {
     var params = new URLSearchParams(window.location.search);
     state.query = params.get("q") || "";
-    var cat = (params.get("cat") || "all").toLowerCase();
-    var known = false;
-    for (var i = 0; i < CATEGORIES.length; i++) {
-      if (CATEGORIES[i].slug === cat) known = true;
-    }
-    state.category = known ? cat : "all";
     inputEl.value = state.query;
   }
 
   function writeParams() {
     var params = new URLSearchParams();
     if (state.query) params.set("q", state.query);
-    if (state.category && state.category !== "all") params.set("cat", state.category);
     var qs = params.toString();
     var next = qs ? "?" + qs : window.location.pathname;
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, "", next);
-    }
-  }
-
-  function renderChips() {
-    CATEGORIES.forEach(function (cat) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "chip";
-      btn.textContent = cat.label;
-      btn.setAttribute("aria-pressed", cat.slug === state.category ? "true" : "false");
-      btn.addEventListener("click", function () {
-        state.category = cat.slug;
-        writeParams();
-        renderChipsState();
-        render();
-      });
-      chipsEl.appendChild(btn);
-    });
-  }
-
-  function renderChipsState() {
-    var buttons = chipsEl.querySelectorAll(".chip");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].setAttribute("aria-pressed", CATEGORIES[i].slug === state.category ? "true" : "false");
     }
   }
 
@@ -469,15 +312,65 @@
     }
   }
 
+  function packRows(items) {
+    var rows = [];
+    var per = 3;
+    for (var i = 0; i < items.length; i += per) {
+      rows.push(items.slice(i, i + per));
+    }
+    return rows;
+  }
+
+  function justifyRows() {
+    var thumbs = resultsEl;
+    if (!thumbs) return;
+    var mobile = window.innerWidth <= 767;
+    var containerWidth = mobile ? window.innerWidth : window.innerWidth - 100;
+    var rows = thumbs.querySelectorAll(".row");
+    var r, i, cells, img, ow, oh, ratio, firstH, ww, total, percentage, rel, newHeight;
+    for (r = 0; r < rows.length; r++) {
+      cells = rows[r].querySelectorAll(".cell");
+      if (!cells.length) continue;
+      if (mobile) {
+        for (i = 0; i < cells.length; i++) {
+          cells[i].style.width = "";
+          img = cells[i].querySelector("img.photo");
+          if (img) img.style.height = "";
+        }
+        continue;
+      }
+      firstH = parseFloat(cells[0].querySelector("img.photo").getAttribute("data-height")) || 9;
+      total = 0;
+      var working = [];
+      for (i = 0; i < cells.length; i++) {
+        img = cells[i].querySelector("img.photo");
+        ow = parseFloat(img.getAttribute("data-width")) || 16;
+        oh = parseFloat(img.getAttribute("data-height")) || 9;
+        ratio = oh / ow;
+        ww = firstH / ratio;
+        working.push({ ratio: ratio });
+        total += ww;
+        working[i].ww = ww;
+      }
+      for (i = 0; i < cells.length; i++) {
+        percentage = working[i].ww / total;
+        rel = percentage * containerWidth;
+        newHeight = rel * working[i].ratio;
+        cells[i].style.width = rel + "px";
+        img = cells[i].querySelector("img.photo");
+        if (img) img.style.height = newHeight + "px";
+      }
+    }
+  }
+
   function render() {
-    var q = state.query;
+    var q = (state.query || "").trim();
+    resultsEl.innerHTML = "";
+    if (!q) return;
+
     var scored = [];
     for (var i = 0; i < state.projects.length; i++) {
       var p = state.projects[i];
-      if (state.category !== "all") {
-        var slugs = p.category_slugs || [];
-        if (slugs.indexOf(state.category) === -1) continue;
-      }
       var s = scoreProject(p, q);
       if (s > 0) scored.push({ p: p, s: s, i: i });
     }
@@ -486,15 +379,6 @@
       return a.i - b.i;
     });
 
-    var total = state.projects.length;
-    var noun = scored.length === 1 ? "PROJECT" : "PROJECTS";
-    if (q || state.category !== "all") {
-      countEl.textContent = scored.length + " OF " + total + " " + noun;
-    } else {
-      countEl.textContent = scored.length + " " + noun;
-    }
-
-    resultsEl.innerHTML = "";
     if (!scored.length) {
       var empty = document.createElement("p");
       empty.className = "empty";
@@ -503,40 +387,49 @@
       return;
     }
 
+    var rows = packRows(scored);
     var frag = document.createDocumentFragment();
-    for (var j = 0; j < scored.length; j++) {
-      var item = scored[j].p;
-      var a = document.createElement("a");
-      a.className = "card";
-      a.href = item.url;
-      var primary = item.artist || item.title || "Untitled";
-      var secondary = item.artist ? item.title : "";
-      var label = [item.artist, item.title].filter(Boolean).join(" — ") || "Untitled";
-      a.setAttribute("aria-label", label);
-      var img = document.createElement("img");
-      img.alt = label;
-      img.loading = "lazy";
-      img.decoding = "async";
-      img.src = item.thumbnail || item.thumbnail_full || "";
-      if (item.thumbnail_full) img.setAttribute("data-full", item.thumbnail_full);
-      img.addEventListener("error", function (ev) { fallbackThumb(ev.target); });
-      var caption = document.createElement("div");
-      caption.className = "caption";
-      var info = document.createElement("div");
-      info.className = "infowrap";
-      info.innerHTML =
-        "<h2>" + escapeHtml(primary) + "</h2>" +
-        (secondary ? "<h3>" + escapeHtml(secondary) + "</h3>" : "") +
-        '<span class="cat">' + escapeHtml((item.categories || []).join(" / ")) + "</span>";
-      var slice = document.createElement("figure");
-      slice.className = "slice";
-      caption.appendChild(info);
-      a.appendChild(img);
-      a.appendChild(caption);
-      a.appendChild(slice);
-      frag.appendChild(a);
+    for (var r = 0; r < rows.length; r++) {
+      var figure = document.createElement("figure");
+      figure.className = "row";
+      for (var j = 0; j < rows[r].length; j++) {
+        var item = rows[r][j].p;
+        var a = document.createElement("a");
+        a.className = "cell";
+        a.href = item.url;
+        var primary = item.artist || item.title || "Untitled";
+        var secondary = item.artist ? (item.title || "") : "";
+        var label = [item.artist, item.title].filter(Boolean).join(" — ") || "Untitled";
+        a.setAttribute("aria-label", label);
+        var img = document.createElement("img");
+        img.className = "photo";
+        img.alt = label;
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.src = item.thumbnail || item.thumbnail_full || "";
+        img.setAttribute("data-width", item.width || 16);
+        img.setAttribute("data-height", item.height || 9);
+        if (item.thumbnail_full) img.setAttribute("data-full", item.thumbnail_full);
+        img.addEventListener("error", function (ev) { fallbackThumb(ev.target); });
+        var caption = document.createElement("div");
+        caption.className = "caption ib addb4";
+        var info = document.createElement("div");
+        info.className = "infowrap ib v-middle";
+        info.innerHTML =
+          "<h1>" + escapeHtml(primary) + "</h1>" +
+          (secondary ? "<h2>" + escapeHtml(secondary) + "</h2>" : "");
+        var slice = document.createElement("figure");
+        slice.className = "slice";
+        caption.appendChild(info);
+        a.appendChild(img);
+        a.appendChild(caption);
+        a.appendChild(slice);
+        figure.appendChild(a);
+      }
+      frag.appendChild(figure);
     }
     resultsEl.appendChild(frag);
+    justifyRows();
   }
 
   var timer = null;
@@ -555,8 +448,11 @@
     render();
   });
 
+  window.addEventListener("resize", function () {
+    justifyRows();
+  });
+
   readParams();
-  renderChips();
 
   fetch("projects.json")
     .then(function (res) {
@@ -569,10 +465,10 @@
     })
     .catch(function (err) {
       resultsEl.innerHTML = '<p class="empty error">Could not load the project index.</p>';
-      countEl.textContent = "";
       console.error(err);
     });
 })();
-  </script>
+
+</script>
 </body>
 </html>
