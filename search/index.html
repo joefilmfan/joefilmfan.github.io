@@ -90,7 +90,7 @@
 if(e||/[?&]embed=1/.test(location.search)){document.documentElement.className+=" embed";
 var b=document.createElement("base");b.target="_top";document.head.appendChild(b);}})();
 </script>
-<style>html.embed header,html.embed .menuBtn,html.embed #menu,html.embed nav,html.embed footer{display:none!important}html.embed body{padding-top:0!important}</style>
+<style>html.embed header,html.embed .menuBtn,html.embed #menu,html.embed nav,html.embed footer{display:none!important}html.embed,html.embed body{padding-top:0!important;min-height:0!important;height:auto!important}html.embed #content{min-height:0!important;height:auto!important;margin-top:0!important}</style>
 </head>
 <body class="pagestatic">
 
@@ -478,9 +478,9 @@ var b=document.createElement("base");b.target="_top";document.head.appendChild(b
 </script>
 <script>
 (function(){if(window.self===window.top)return;
-function send(){try{parent.postMessage({jkSearchH:Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)},"*")}catch(e){}}
+function send(){try{var c=document.getElementById("content");var r=c.getBoundingClientRect();parent.postMessage({jkSearchH:Math.ceil(r.bottom+window.scrollY)+40},"*")}catch(e){}}
 window.addEventListener("load",send);window.addEventListener("resize",send);
-if(window.MutationObserver){new MutationObserver(function(){setTimeout(send,50)}).observe(document.body,{childList:true,subtree:true,attributes:true});}
+if(window.MutationObserver){new MutationObserver(function(){setTimeout(send,50)}).observe(document.body,{childList:true,subtree:true,attributes:false});}
 setInterval(send,1500);})();
 </script>
 </body>
