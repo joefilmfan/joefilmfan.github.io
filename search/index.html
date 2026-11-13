@@ -478,7 +478,7 @@ var b=document.createElement("base");b.target="_top";document.head.appendChild(b
 </script>
 <script>
 (function(){if(window.self===window.top)return;
-function send(){try{var c=document.getElementById("content");var r=c.getBoundingClientRect();parent.postMessage({jkSearchH:Math.ceil(r.bottom+window.scrollY)+40},"*")}catch(e){}}
+function send(){try{var b=0;var els=document.querySelectorAll("#content input, #content form, #content h1, #content p, #thumbs > *");for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.height>0&&r.bottom>b)b=r.bottom;}parent.postMessage({jkSearchH:Math.ceil(b+window.scrollY)+60},"*")}catch(e){}}
 window.addEventListener("load",send);window.addEventListener("resize",send);
 if(window.MutationObserver){new MutationObserver(function(){setTimeout(send,50)}).observe(document.body,{childList:true,subtree:true,attributes:false});}
 setInterval(send,1500);})();
